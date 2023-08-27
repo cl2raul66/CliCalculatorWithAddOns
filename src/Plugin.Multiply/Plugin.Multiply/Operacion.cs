@@ -1,4 +1,4 @@
-﻿namespace Multiply;
+﻿namespace Plugin.Multiply;
 
 public class Operacion
 {
