@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Multiply", "Plugin.Multiply\Plugin.Multiply.csproj", "{94AABBE1-E8BA-4BDC-B2F7-EE6DF41388A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94AABBE1-E8BA-4BDC-B2F7-EE6DF41388A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94AABBE1-E8BA-4BDC-B2F7-EE6DF41388A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94AABBE1-E8BA-4BDC-B2F7-EE6DF41388A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94AABBE1-E8BA-4BDC-B2F7-EE6DF41388A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59952D95-D033-4702-9596-AF0619427B31}
+	EndGlobalSection
+EndGlobal
