@@ -2,11 +2,13 @@
 using System.Composition.Hosting;
 using Sample.Plugin;
 
-var configuration = new ContainerConfiguration()
-                .WithAssembly(typeof(Program).GetTypeInfo().Assembly);
+var a = typeof(Program).GetTypeInfo().Assembly;
+
+var configuration = new ContainerConfiguration();
+configuration.WithAssembly(a);
 
 // Load all DLLs in the current directory
-var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), $"Plugin.*.dll");
+var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), "Plugin.*.dll");
 foreach (var dll in dlls)
 {
     var assembly = Assembly.LoadFile(dll);
