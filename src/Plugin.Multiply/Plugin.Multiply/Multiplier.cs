@@ -2,13 +2,13 @@
 
 namespace Plugin.Multiply;
 
-public interface ICalculator
+public interface IMultiplier
 {
     int Multiply(int x, int y);
 }
 
-[Export(typeof(ICalculator))]
-public class Multiplier : ICalculator
+[Export(typeof(IMultiplier))]
+public class Multiplier : IMultiplier
 {
     public int Multiply(int x, int y)
     {
