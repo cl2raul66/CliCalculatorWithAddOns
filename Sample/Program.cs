@@ -38,7 +38,8 @@ while (true)
             continue;
         }
     }
-    Console.WriteLine($"\n El resultado es: {resultado}");
+    Console.WriteLine();
+    Console.WriteLine($"El resultado es: {resultado}");
 }
 
 
