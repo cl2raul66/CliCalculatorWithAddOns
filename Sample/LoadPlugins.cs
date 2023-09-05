@@ -10,10 +10,16 @@ public static class LoadPlugins
         get
         {
             List<IPlugin> PluginsList = new();
-            foreach (var element in Directory.GetFiles(Directory.GetCurrentDirectory(), "Plugin.*.dll"))
+            string modulesPath = Path.Combine(Directory.GetCurrentDirectory(), "Modules");
+            if (!Directory.Exists(modulesPath))
             {
-                AssemblyLoadContext assemblyLoadContext = new(element);
-                Assembly assembly = assemblyLoadContext.LoadFromAssemblyPath(element);
+                Directory.CreateDirectory(modulesPath);
+            }
+
+            foreach (var element in Directory.GetFiles(modulesPath, "Plugin.*.dll"))
+            {
+                var loadContext = new PluginLoadContext(element);
+                Assembly assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(element)));
                 IPlugin? plugin = Activator.CreateInstance(assembly.GetExportedTypes()[0]) as IPlugin;
                 if (plugin is not null)
                 {
