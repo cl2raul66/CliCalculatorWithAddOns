@@ -1,108 +1,63 @@
-﻿using System.Reflection;
-using System.Composition.Hosting;
-using Sample.Plugin;
+﻿using Sample.Plugin;
+using Sample;
+using IPlugins;
 
-var a = typeof(Program).GetTypeInfo().Assembly;
+var Assemblys = LoadPlugins.Plugins.ToList();
 
-var configuration = new ContainerConfiguration();
-configuration.WithAssembly(a);
+IPlugin? InternalPlugin = new Operation();
 
-// Load all DLLs in the current directory
-var dlls = Directory.GetFiles(Directory.GetCurrentDirectory(), "Plugin.*.dll");
-foreach (var dll in dlls)
+if (InternalPlugin is null)
 {
-    var assembly = Assembly.LoadFile(dll);
-    configuration.WithAssembly(assembly);
+    Console.WriteLine("Not modules loaded");
+    return;
 }
 
-using (var container = configuration.CreateContainer())
+Console.WriteLine("Choose an operation:");
+Assemblys.Insert(0, InternalPlugin);
+int i = 1;
+
+foreach (var item in Assemblys)
 {
-    Console.WriteLine("Choose an operation:");
-    Console.WriteLine("1. Add");
+    Console.WriteLine(i + ". " + item.Name);
+    i++;
+}
 
-    // Get all exported types that implement ICalculator
-    var calculatorTypes = container.GetExports<ICalculator>().Select(c => c.GetType()).Distinct().ToList();
+int? choice = null;
 
-    // Display a menu option for each exported type
-    int i = 2;
-    foreach (var calculatorType in calculatorTypes)
+bool choiceEnable = false;
+while (!choiceEnable)
+{
+    choice = Convert.ToInt32(Console.ReadLine());
+    if (choice is null || choice < 1 || choice > i)
     {
-        var methods = calculatorType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-        foreach (var method in methods)
-        {
-            if (method.Name != "Add" && method.GetParameters().Length == 2 && method.GetParameters()[0].ParameterType == typeof(int) && method.GetParameters()[1].ParameterType == typeof(int))
-            {
-                Console.WriteLine(i + ". " + method.Name);
-                i++;
-            }
-        }
-    }
-
-    int choice = Convert.ToInt32(Console.ReadLine());
-
-    Console.WriteLine("Enter first number: ");
-    int x = Convert.ToInt32(Console.ReadLine());
-
-    Console.WriteLine("Enter second number: ");
-    int y = Convert.ToInt32(Console.ReadLine());
-
-    if (choice == 1)
-    {
-        var calculator = container.GetExport<ICalculator>();
-        Console.WriteLine("Result: " + calculator.Add(x, y));
+        Console.WriteLine("Invalid choice.");
     }
     else
     {
-        // Find the selected operation
-        string operation = null;
-        i = 2;
-        foreach (var calculatorType in calculatorTypes)
-        {
-            var methods = calculatorType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            foreach (var method in methods)
-            {
-                if (method.Name != "Add" && method.GetParameters().Length == 2 && method.GetParameters()[0].ParameterType == typeof(int) && method.GetParameters()[1].ParameterType == typeof(int))
-                {
-                    if (i == choice)
-                    {
-                        operation = method.Name;
-                        break;
-                    }
-                    i++;
-                }
-            }
-            if (operation != null) break;
-        }
-
-        if (operation == null)
-        {
-            Console.WriteLine("Invalid choice.");
-        }
-        else
-        {
-            // Find the calculator that implements the selected operation
-            object calculator = null;
-            foreach (var calculatorType in calculatorTypes)
-            {
-                var method = calculatorType.GetMethod(operation);
-                if (method != null)
-                {
-                    calculator = container.GetExports<ICalculator>().First(c => c.GetType() == calculatorType);
-                    break;
-                }
-            }
-
-            if (calculator == null)
-            {
-                Console.WriteLine(operation + " functionality is not available.");
-            }
-            else
-            {
-                // Invoke the selected operation
-                var method = calculator.GetType().GetMethod(operation);
-                double result = (double)method.Invoke(calculator, new object[] { x, y });
-                Console.WriteLine("Result: " + result);
-            }
-        }
+        choiceEnable = true;
     }
 }
+
+double? x = null;
+while (x is null)
+{
+    Console.WriteLine("Enter first number: ");
+    x = Convert.ToInt32(Console.ReadLine());
+    if (x is null)
+    {
+        Console.WriteLine("The first number is not number");
+    }
+}
+
+double? y = null;
+while (y is null)
+{
+    Console.WriteLine("Enter second number: ");
+    y = Convert.ToInt32(Console.ReadLine());
+    if (y is null)
+    {
+        Console.WriteLine("The second number is not number");
+    }
+}
+
+Console.WriteLine($"Result: {Assemblys[(int)choice! - 1].Calculate((double)x!, (double)y!)}");

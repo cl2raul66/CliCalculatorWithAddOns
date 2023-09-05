@@ -12,4 +12,10 @@
     <PackageReference Include="System.Composition.TypedParts" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="IPlugins">
+      <HintPath>..\src\IPlugins\IPlugins\bin\Debug\net7.0\IPlugins.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="System.Composition.AttributedModel" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IPlugins">
+      <HintPath>..\..\IPlugins\IPlugins\bin\Debug\net7.0\IPlugins.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
